@@ -1,6 +1,6 @@
 // 從 assets/data/workshops.json 讀取所有 Workshop 的 metadata 並渲染成卡片。
 // 新增一個 Workshop 時，只需要在 workshops.json 加入一筆資料，
-// 這支腳本與呼叫它的頁面（index.html、workshops.html）都不需要修改。
+// 這支腳本與呼叫它的 index.html 都不需要修改。
 (function () {
   const GITHUB_REPO_URL = "https://github.com/wyattlu-source/-bob-workshop";
   const DATA_URL = "assets/data/workshops.json";

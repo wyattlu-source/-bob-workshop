@@ -14,49 +14,255 @@
   <div data-include="partials/nav.html"></div>
 
   <main>
-    <section class="hero py-5">
-      <div class="container py-5 text-center">
-        <h1 class="display-5 fw-bold">IBM Bob AI Coding Workshop Framework</h1>
-        <p class="lead col-lg-8 mx-auto">
-          一套可長期維護、持續擴充的教學框架，用來快速建立不同產業的 IBM Bob 實作課程。
-          從需求分析、Prompt 設計、產生程式碼，到檢查、重構、完成專案，教的是完整的 AI Coding Workflow。
-        </p>
-        <div class="d-flex justify-content-center gap-3 mt-4">
-          <a href="getting-started.html" class="btn btn-light btn-lg">開始使用</a>
-          <a href="workshops.html" class="btn btn-outline-light btn-lg">瀏覽 Workshop</a>
+    <!-- 首頁 ============================================================ -->
+    <section data-tab-panel="home">
+      <div class="hero py-5">
+        <div class="container py-5 text-center">
+          <h1 class="display-5 fw-bold">IBM Bob AI Coding Workshop Framework</h1>
+          <p class="lead col-lg-8 mx-auto">
+            一套可長期維護、持續擴充的教學框架，用來快速建立不同產業的 IBM Bob 實作課程。
+            從需求分析、Prompt 設計、產生程式碼，到檢查、重構、完成專案，教的是完整的 AI Coding Workflow。
+          </p>
+          <div class="d-flex justify-content-center gap-3 mt-4">
+            <a href="#getting-started" class="btn btn-light btn-lg">開始使用</a>
+            <a href="#workshops" class="btn btn-outline-light btn-lg">瀏覽 Workshop</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container py-5">
+        <div class="row g-4 text-center">
+          <div class="col-md-4">
+            <h3 class="h5">不是一份教材</h3>
+            <p class="text-body-secondary">
+              而是一套標準化架構：故事背景、商業需求、Prompt、Bob 操作技巧、預期成果、重點說明、挑戰題、課後反思。
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h3 class="h5">跨產業可擴充</h3>
+            <p class="text-body-secondary">
+              Medical 是第一個範例，新增 Banking、Manufacturing、Retail 等產業不需要重新設計網站或教學流程。
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h3 class="h5">教完整的工作流程</h3>
+            <p class="text-body-secondary">
+              從需求分析到 Prompt 設計、產生程式碼、檢查修改、重構，學員理解的是企業如何把 AI 融入開發流程。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+          <h2 class="h3 mb-0">Workshop</h2>
+          <a href="#workshops" class="small">查看全部</a>
+        </div>
+        <div class="row g-4" data-workshops-list></div>
+      </div>
+    </section>
+
+    <!-- Getting Started ================================================ -->
+    <section data-tab-panel="getting-started" class="container py-5">
+      <h1 class="mb-3">Getting Started</h1>
+      <p class="text-body-secondary col-lg-8 mb-5">
+        不論你是要參加 Workshop 的學員，還是想貢獻新產業案例的講師，都可以從這裡開始。
+      </p>
+
+      <div class="row g-5">
+        <div class="col-lg-6">
+          <h2 class="h4">給學員</h2>
+          <ol class="mt-3">
+            <li class="mb-2">安裝並登入 IBM Bob。</li>
+            <li class="mb-2">Clone 這個 repository 到本機。</li>
+            <li class="mb-2">
+              到 <a href="#workshops">Workshop</a> 頁面選一個案例（目前只有 Medical），
+              打開對應 <code>workshops/&lt;id&gt;/</code> 資料夾。
+            </li>
+            <li class="mb-2">
+              依序讀 <strong>01 故事背景 → 02 商業需求 → 03 Prompt 設計</strong>，
+              打開 <code>starter/&lt;id&gt;/</code> 的起始專案，跟著 Prompt 用 Bob 開發。
+            </li>
+            <li class="mb-2">
+              卡關時看 <strong>04 Bob 操作技巧</strong>；完成後對照 <strong>05 預期成果</strong> 與 <code>solution/&lt;id&gt;/</code>。
+            </li>
+            <li class="mb-2">讀 <strong>06 重點說明</strong>，再試著做 <strong>07 挑戰題</strong>。</li>
+            <li>最後用 <strong>08 課後反思</strong> 的問題整理自己走過的 AI Coding Workflow。</li>
+          </ol>
+        </div>
+
+        <div class="col-lg-6">
+          <h2 class="h4">給講師 / 貢獻者</h2>
+          <p class="mt-3">
+            想新增一個新產業的 Workshop（例如 Banking、Manufacturing、Retail），
+            請參考 Repository 中的
+            <code>framework/CONTRIBUTING.md</code>。
+          </p>
+          <p>核心概念：</p>
+          <ul>
+            <li>複製 <code>framework/workshop-template/</code> 到 <code>workshops/&lt;id&gt;/</code>，依固定的 8 個章節填寫內容。</li>
+            <li>
+              在 <code>starter/</code>、<code>solution/</code>、<code>prompt-library/</code>、<code>instructor/</code>
+              底下新增以 <code>&lt;id&gt;</code> 命名的資料夾。
+            </li>
+            <li>
+              在 <code>docs/assets/data/workshops.json</code> 註冊 metadata，網站的 Workshop 列表會自動顯示，
+              不需要修改任何網頁。
+            </li>
+          </ul>
+          <a href="#best-practices" class="btn btn-outline-primary mt-2">看 Best Practices</a>
         </div>
       </div>
     </section>
 
-    <section class="container py-5">
-      <div class="row g-4 text-center">
-        <div class="col-md-4">
-          <h3 class="h5">不是一份教材</h3>
-          <p class="text-body-secondary">
-            而是一套標準化架構：故事背景、商業需求、Prompt、Bob 操作技巧、預期成果、重點說明、挑戰題、課後反思。
-          </p>
-        </div>
-        <div class="col-md-4">
-          <h3 class="h5">跨產業可擴充</h3>
-          <p class="text-body-secondary">
-            Medical 是第一個範例，新增 Banking、Manufacturing、Retail 等產業不需要重新設計網站或教學流程。
-          </p>
-        </div>
-        <div class="col-md-4">
-          <h3 class="h5">教完整的工作流程</h3>
-          <p class="text-body-secondary">
-            從需求分析到 Prompt 設計、產生程式碼、檢查修改、重構，學員理解的是企業如何把 AI 融入開發流程。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="container py-5">
-      <div class="d-flex justify-content-between align-items-end mb-4">
-        <h2 class="h3 mb-0">Workshop</h2>
-        <a href="workshops.html" class="small">查看全部</a>
-      </div>
+    <!-- Workshop ======================================================= -->
+    <section data-tab-panel="workshops" class="container py-5">
+      <h1 class="mb-3">Workshop</h1>
+      <p class="text-body-secondary col-lg-8 mb-5">
+        每個 Workshop 都採用相同的教學架構：故事背景、商業需求、Prompt 設計、Bob 操作技巧、預期成果、重點說明、挑戰題、課後反思。
+        點選卡片可以到 GitHub 上閱讀完整內容。
+      </p>
       <div class="row g-4" data-workshops-list></div>
+    </section>
+
+    <!-- Prompt Library ================================================= -->
+    <section data-tab-panel="prompt-library" class="container py-5">
+      <h1 class="mb-3">Prompt Library</h1>
+      <p class="text-body-secondary col-lg-8 mb-4">
+        收錄各 Workshop 中可重複使用的 Prompt，依產業分類。每個 Workshop 完成後，這裡會列出對應的 Prompt 分類卡片，
+        可以直接連到 Repository 的 <code>prompt-library/&lt;id&gt;/</code> 資料夾閱讀完整內容。
+      </p>
+
+      <div class="alert alert-secondary col-lg-8">
+        目前 Prompt Library 尚未有內容上線。第一批 Prompt 會隨 Medical Workshop 一併發布。
+      </div>
+    </section>
+
+    <!-- Playground ====================================================== -->
+    <section data-tab-panel="playground" class="container py-5">
+      <h1 class="mb-3">Playground</h1>
+      <p class="text-body-secondary col-lg-8 mb-4">
+        規劃中的互動練習區，讓學員不需要下載程式碼，也能直接在瀏覽器嘗試 Prompt 設計練習。
+      </p>
+
+      <div class="alert alert-secondary col-lg-8">
+        Playground 尚未開放。第一版先聚焦在 Workshop 內容本身，Playground 會在後續版本加入。
+      </div>
+    </section>
+
+    <!-- Best Practices ================================================= -->
+    <section data-tab-panel="best-practices" class="container py-5">
+      <h1 class="mb-3">Best Practices</h1>
+      <p class="text-body-secondary col-lg-8 mb-5">
+        這個 Framework 除了教學流程，也整理 IBM Bob 的進階能力最佳實務，收錄在 Repository 的
+        <code>bob/</code> 資料夾，供所有 Workshop 共用參考。
+      </p>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">AGENTS</h5>
+              <p class="card-text text-body-secondary small">如何定義專用 Agent，什麼情境適合拆分成獨立 Agent。</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Rules</h5>
+              <p class="card-text text-body-secondary small">如何撰寫專案規範讓 Bob 遵循，例如程式碼風格與架構限制。</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Skills</h5>
+              <p class="card-text text-body-secondary small">如何封裝可重複使用的技能／流程給 Bob 呼叫。</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Commands</h5>
+              <p class="card-text text-body-secondary small">如何建立自訂指令加速常見操作。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-secondary col-lg-8 mt-5">
+        MCP 與 API Integration 的最佳實務規劃中，會在後續版本加入 <code>bob/mcp/</code> 與
+        <code>bob/api-integration/</code>。
+      </div>
+    </section>
+
+    <!-- FAQ ============================================================= -->
+    <section data-tab-panel="faq" class="container py-5">
+      <h1 class="mb-4">FAQ</h1>
+
+      <div class="accordion col-lg-9" id="faqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+              這個專案是不是只有醫療（Medical）案例？
+            </button>
+          </h2>
+          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              不是。Medical 只是第一個範例，用來驗證整個 Framework 是否足夠彈性。之後會陸續加入 Banking、
+              Manufacturing、Retail、Government 等產業案例，所有 Workshop 共用同一套教學架構與網站。
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+              我要怎麼新增一個新產業的 Workshop？
+            </button>
+          </h2>
+          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              參考 Repository 中的 <code>framework/CONTRIBUTING.md</code>。簡單來說是複製
+              <code>framework/workshop-template/</code>，依照固定的 8 個章節填寫內容，並在
+              <code>starter/</code>、<code>solution/</code>、<code>prompt-library/</code>、<code>instructor/</code>
+              新增對應資料夾，最後在 <code>docs/assets/data/workshops.json</code> 註冊即可，不需要修改網站頁面。
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+              為什麼網站用 HTML + Bootstrap + Vanilla JS，不用 React / Vue？
+            </button>
+          </h2>
+          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              第一版刻意保持簡單，方便學員理解網站原始碼、也讓 IBM Bob 在課程中能穩定產生正確的程式碼，
+              同時可以直接部署到 GitHub Pages，不需要額外的建置流程。
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+              在本機開啟網站頁面，Workshop 列表沒有顯示怎麼辦？
+            </button>
+          </h2>
+          <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              網站用 <code>fetch()</code> 讀取共用導覽列與 <code>workshops.json</code>，直接用瀏覽器開啟
+              <code>file://</code> 路徑會因為 CORS 限制而失敗。請用本地伺服器預覽，例如在 <code>docs/</code>
+              資料夾執行 <code>python -m http.server</code>，詳見 <code>docs/README.md</code>。
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 

@@ -4,27 +4,25 @@
 
 ## 架構
 
+網站是**單頁式（one-page）應用**：只有一個 `index.html`，每個分頁（首頁、Getting Started、Workshop...）都是頁面裡的一個 `[data-tab-panel]` 區塊，靠網址 hash（例如 `#workshops`）切換顯示，不會整頁重新載入。
+
 ```
 docs/
-├── index.html              # 首頁
-├── getting-started.html
-├── workshops.html
-├── prompt-library.html
-├── playground.html
-├── best-practices.html
-├── faq.html
+├── index.html               # 唯一的頁面，所有 [data-tab-panel] 區塊都在這裡
 ├── partials/
-│   ├── nav.html             # 共用導覽列，所有頁面用 JS 注入
-│   └── footer.html          # 共用頁尾
+│   ├── nav.html              # 共用導覽列，連結是 #home、#workshops 這類 hash
+│   └── footer.html           # 共用頁尾
 └── assets/
-    ├── css/style.css
+    ├── css/style.css          # 含 [data-tab-panel] 的顯示/隱藏樣式
     ├── js/
-    │   ├── include.js        # 注入 partials/、標記目前頁面的導覽列高亮
-    │   └── workshops.js       # 讀取 workshops.json，渲染 Workshop 卡片
-    └── data/workshops.json    # 所有 Workshop 的 metadata，新增 Workshop 只需要改這裡
+    │   ├── include.js         # 注入 partials/、依 hash 切換 tab、監聽 hashchange
+    │   └── workshops.js        # 讀取 workshops.json，渲染 Workshop 卡片
+    └── data/workshops.json     # 所有 Workshop 的 metadata，新增 Workshop 只需要改這裡
 ```
 
-新增一個 Workshop 時，只需要在 `assets/data/workshops.json` 加入一筆資料，首頁與 `workshops.html` 的卡片會自動更新，不需要修改任何 HTML 頁面。
+新增一個分頁時，在 `index.html` 加一個 `<section data-tab-panel="新id">`，並在 `partials/nav.html` 加一個 `<a data-tab="新id" href="#新id">`，`include.js` 會自動讀取所有 `[data-tab-panel]` 的 id，不需要在 JS 裡另外註冊。
+
+新增一個 Workshop 時，只需要在 `assets/data/workshops.json` 加入一筆資料，首頁與 Workshop 分頁的卡片會自動更新，不需要修改任何 HTML。
 
 ## 本地預覽
 
