@@ -1,0 +1,11 @@
+{
+  "id": "medical",
+  "title": "智慧診所 / AI Clinic",
+  "industry": "Medical",
+  "summary": "以智慧診所為情境，帶學員用 IBM Bob 走完一次完整的 AI Coding Workflow。",
+  "level": "beginner",
+  "durationMinutes": 180,
+  "tags": ["medical", "healthcare", "starter-workshop"],
+  "status": "published",
+  "path": "workshops/medical/"
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Best Practices｜IBM Bob AI Coding Workshop Framework</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link href="assets/css/style.css" rel="stylesheet" />
+</head>
+<body>
+  <div data-include="partials/nav.html"></div>
+
+  <main class="container py-5">
+    <h1 class="mb-3">Best Practices</h1>
+    <p class="text-body-secondary col-lg-8 mb-5">
+      這個 Framework 除了教學流程，也整理 IBM Bob 的進階能力最佳實務，收錄在 Repository 的
+      <code>bob/</code> 資料夾，供所有 Workshop 共用參考。
+    </p>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">AGENTS</h5>
+            <p class="card-text text-body-secondary small">如何定義專用 Agent，什麼情境適合拆分成獨立 Agent。</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Rules</h5>
+            <p class="card-text text-body-secondary small">如何撰寫專案規範讓 Bob 遵循，例如程式碼風格與架構限制。</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Skills</h5>
+            <p class="card-text text-body-secondary small">如何封裝可重複使用的技能／流程給 Bob 呼叫。</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Commands</h5>
+            <p class="card-text text-body-secondary small">如何建立自訂指令加速常見操作。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-secondary col-lg-8 mt-5">
+      MCP 與 API Integration 的最佳實務規劃中，會在後續版本加入 <code>bob/mcp/</code> 與
+      <code>bob/api-integration/</code>。
+    </div>
+  </main>
+
+  <div data-include="partials/footer.html"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/include.js"></script>
+</body>
+</html>

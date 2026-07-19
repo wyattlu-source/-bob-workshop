@@ -1,0 +1,40 @@
+:root {
+  --bob-accent: #0f62fe; /* IBM Blue */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.navbar-nav .nav-link.active {
+  color: #fff;
+  font-weight: 600;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--bob-accent), #001d6c);
+  color: #fff;
+}
+
+.status-badge-draft {
+  background-color: #6c757d;
+}
+
+.status-badge-published {
+  background-color: #198754;
+}
+
+.workshop-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.workshop-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+}

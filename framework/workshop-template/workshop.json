@@ -1,0 +1,11 @@
+{
+  "id": "{{workshop-id}}",
+  "title": "{{中文標題，例如：智慧診所 / AI Clinic}}",
+  "industry": "{{產業類別，例如：Medical}}",
+  "summary": "{{一到兩句話的簡介，會顯示在網站卡片上}}",
+  "level": "{{beginner | intermediate | advanced}}",
+  "durationMinutes": 180,
+  "tags": ["{{tag1}}", "{{tag2}}"],
+  "status": "{{draft | published}}",
+  "path": "workshops/{{workshop-id}}/"
+}
