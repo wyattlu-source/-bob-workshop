@@ -1,0 +1,16 @@
+[
+  {
+    "workshopId": "medical",
+    "workshopTitle": "智慧診所 / AI Clinic",
+    "industry": "Medical",
+    "path": "prompt-library/medical/",
+    "summary": "從候診看板 Workshop 整理出來的 5 個通用 Prompt，改寫成 {{參數}} 版本，可以套用到其他「清單 + 狀態管理」型介面。",
+    "prompts": [
+      { "title": "資料渲染 Prompt", "scenario": "已經有一個資料陣列，要把它渲染成表格或卡片列表。" },
+      { "title": "新增表單 Prompt", "scenario": "要在既有清單上加一個「新增一筆資料」的表單，且渲染邏輯已經確認過、不希望被改動。" },
+      { "title": "狀態轉換 + 業務規則 Prompt", "scenario": "清單項目有多個狀態，狀態轉換之間有隱含的業務規則。" },
+      { "title": "搜尋 / 篩選 / 統計 Prompt", "scenario": "清單已經可以顯示與新增，要加上查詢能力與彙總數字，且不想讓既有邏輯被整個重寫。" },
+      { "title": "重構收尾 Prompt", "scenario": "走完前面幾個 Prompt 後，程式碼可能已經有點亂，想在不新增功能的前提下請 Bob 檢視並提出重構建議。" }
+    ]
+  }
+]

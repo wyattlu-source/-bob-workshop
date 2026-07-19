@@ -15,9 +15,12 @@ docs/
 └── assets/
     ├── css/style.css          # 含 [data-tab-panel] 的顯示/隱藏樣式
     ├── js/
-    │   ├── include.js         # 注入 partials/、依 hash 切換 tab、監聽 hashchange
-    │   └── workshops.js        # 讀取 workshops.json，渲染 Workshop 卡片
-    └── data/workshops.json     # 所有 Workshop 的 metadata，新增 Workshop 只需要改這裡
+    │   ├── include.js          # 注入 partials/、依 hash 切換 tab、監聽 hashchange
+    │   ├── workshops.js         # 讀取 workshops.json，渲染 Workshop 卡片
+    │   └── prompt-library.js    # 讀取 prompts.json，渲染 Prompt Library 卡片
+    └── data/
+        ├── workshops.json       # 所有 Workshop 的 metadata，新增 Workshop 只需要改這裡
+        └── prompts.json          # 各 Workshop 的 Prompt 分類，新增 Prompt 分類只需要改這裡
 ```
 
 新增一個分頁時，在 `index.html` 加一個 `<section data-tab-panel="新id">`，並在 `partials/nav.html` 加一個 `<a data-tab="新id" href="#新id">`，`include.js` 會自動讀取所有 `[data-tab-panel]` 的 id，不需要在 JS 裡另外註冊。
