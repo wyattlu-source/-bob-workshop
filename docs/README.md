@@ -4,18 +4,18 @@
 
 ## 架構
 
-網站是**單頁式（one-page）應用**：只有一個 `index.html`，每個分頁（首頁、Getting Started、Workshop...）都是頁面裡的一個 `[data-tab-panel]` 區塊，靠網址 hash（例如 `#workshops`）切換顯示，不會整頁重新載入。
+網站是**單頁滾動式（one-page scroll）應用**：只有一個 `index.html`，每個區塊（首頁、Getting Started、Workshop...）都是頁面裡依序排列的 `<section id="...">`，全部同時顯示，學員從上往下捲動閱讀即可，不會切換或隱藏內容。導覽列連結是錨點（例如 `#workshops`），點擊會平滑捲動到對應區塊，並用 IBM Plex 字型與藍綠配色呈現。
 
 ```
 docs/
-├── index.html               # 唯一的頁面，所有 [data-tab-panel] 區塊都在這裡
+├── index.html               # 唯一的頁面，所有區塊 <section id="..."> 依序排列在這裡
 ├── partials/
-│   ├── nav.html              # 共用導覽列，連結是 #home、#workshops 這類 hash
+│   ├── nav.html              # 共用導覽列，連結是 #home、#workshops 這類錨點
 │   └── footer.html           # 共用頁尾
 └── assets/
-    ├── css/style.css          # 含 [data-tab-panel] 的顯示/隱藏樣式
+    ├── css/style.css          # IBM Plex 主題樣式（顏色、字型、卡片、平滑捲動）
     ├── js/
-    │   ├── include.js          # 注入 partials/、依 hash 切換 tab、監聽 hashchange
+    │   ├── include.js          # 注入 partials/，並用 IntersectionObserver 依捲動位置highlight 導覽列
     │   ├── workshops.js         # 讀取 workshops.json，渲染 Workshop 卡片
     │   └── prompt-library.js    # 讀取 prompts.json，渲染 Prompt Library 卡片
     └── data/
@@ -23,7 +23,7 @@ docs/
         └── prompts.json          # 各 Workshop 的 Prompt 分類，新增 Prompt 分類只需要改這裡
 ```
 
-新增一個分頁時，在 `index.html` 加一個 `<section data-tab-panel="新id">`，並在 `partials/nav.html` 加一個 `<a data-tab="新id" href="#新id">`，`include.js` 會自動讀取所有 `[data-tab-panel]` 的 id，不需要在 JS 裡另外註冊。
+新增一個區塊時，在 `index.html` 加一個 `<section id="新id">`，並在 `partials/nav.html` 加一個 `<a data-tab="新id" href="#新id">`，`include.js` 會自動把它納入捲動 highlight 邏輯，不需要在 JS 裡另外註冊。
 
 新增一個 Workshop 時，只需要在 `assets/data/workshops.json` 加入一筆資料，首頁與 Workshop 分頁的卡片會自動更新，不需要修改任何 HTML。
 

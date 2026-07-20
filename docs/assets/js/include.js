@@ -1,14 +1,9 @@
 // 1. 讀取 [data-include] 元素指定的 partial（nav、footer），注入頁面。
-// 2. 這是單頁式（one-page）網站：所有分頁內容都在 index.html 裡的 [data-tab-panel]
-//    區塊中，靠這支腳本依網址 hash（例如 #workshops）切換顯示，不會整頁重新載入。
+// 2. 這是單頁滾動式網站：所有區塊都在 index.html 裡依序排列並同時顯示，
+//    導覽列連結只是錨點捲動（配合 CSS scroll-behavior: smooth），不會隱藏其他區塊。
 // 注意：partial 是透過 fetch() 讀取，開發時請用本地伺服器預覽（見 docs/README.md），
 // 直接用瀏覽器開啟 file:// 會因為 CORS 限制而讀取失敗。
 (function () {
-  const TAB_IDS = Array.from(document.querySelectorAll("[data-tab-panel]")).map(
-    (el) => el.dataset.tabPanel
-  );
-  const DEFAULT_TAB = TAB_IDS[0] || "home";
-
   async function loadIncludes() {
     const targets = document.querySelectorAll("[data-include]");
     await Promise.all(
@@ -22,32 +17,46 @@
         }
       })
     );
-    initTabs();
+    initNav();
   }
 
-  function showTab(id, updateHash) {
-    if (!TAB_IDS.includes(id)) id = DEFAULT_TAB;
+  function initNav() {
+    const navLinks = Array.from(document.querySelectorAll(".nav-link[data-tab]"));
+    if (!navLinks.length) return;
 
-    document.querySelectorAll("[data-tab-panel]").forEach((panel) => {
-      panel.classList.toggle("active", panel.dataset.tabPanel === id);
+    document.body.addEventListener("click", (event) => {
+      const link = event.target.closest(".nav-link[data-tab]");
+      if (link) collapseMobileNav();
     });
 
-    document.querySelectorAll(".nav-link[data-tab]").forEach((link) => {
-      const isActive = link.dataset.tab === id;
-      link.classList.toggle("active", isActive);
-      if (isActive) {
-        link.setAttribute("aria-current", "page");
-      } else {
-        link.removeAttribute("aria-current");
-      }
-    });
+    const sections = navLinks
+      .map((link) => document.getElementById(link.dataset.tab))
+      .filter(Boolean);
 
-    if (updateHash && window.location.hash !== `#${id}`) {
-      history.pushState(null, "", `#${id}`);
-    }
+    const setActive = (id) => {
+      navLinks.forEach((link) => {
+        const isActive = link.dataset.tab === id;
+        link.classList.toggle("active", isActive);
+        if (isActive) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    };
 
-    window.scrollTo(0, 0);
-    collapseMobileNav();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting);
+        if (visible.length > 0) {
+          setActive(visible[0].target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    setActive(sections[0] && sections[0].id);
   }
 
   function collapseMobileNav() {
@@ -55,25 +64,6 @@
     if (navEl && navEl.classList.contains("show") && window.bootstrap) {
       window.bootstrap.Collapse.getOrCreateInstance(navEl).hide();
     }
-  }
-
-  function currentTabFromHash() {
-    return window.location.hash.replace(/^#/, "") || DEFAULT_TAB;
-  }
-
-  function initTabs() {
-    document.body.addEventListener("click", (event) => {
-      const link = event.target.closest("a[href^='#']");
-      if (!link) return;
-      const id = link.getAttribute("href").slice(1);
-      if (!TAB_IDS.includes(id)) return; // 不是分頁連結（例如 FAQ 手風琴），交給 Bootstrap 處理
-      event.preventDefault();
-      showTab(id, true);
-    });
-
-    window.addEventListener("hashchange", () => showTab(currentTabFromHash(), false));
-
-    showTab(currentTabFromHash(), false);
   }
 
   document.addEventListener("DOMContentLoaded", loadIncludes);
