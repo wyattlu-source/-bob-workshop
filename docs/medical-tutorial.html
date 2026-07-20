@@ -172,6 +172,7 @@
           <a href="#step9">進階 Rules</a>
           <a href="#step10">進階 Skills</a>
           <a href="#step11">進階 Commands</a>
+          <a href="#step12">延伸 3 分科別叫號</a>
           <a href="#reflection">課後反思</a>
         </div>
       </aside>
@@ -519,6 +520,45 @@ argument-hint: （不需要參數）
             <strong>預期 Bob 回應：</strong>建立 <code>.bob/commands/show-state.md</code>。
             測試方式：之後觸發這個指令（實際觸發方式依 Bob IDE 介面而定），
             就能重複用同一個指令快速看目前檔案狀態，不用每次重新描述需求。
+          </div>
+        </section>
+
+        <!-- Step 12 ===================================================== -->
+        <section id="step12" class="mb-5">
+          <h2 class="step-title">
+            <span class="step-number">12</span> 延伸功能：分科別叫號看板
+            <span class="extension-badge">延伸練習</span>
+          </h2>
+          <div class="why-box">
+            <strong>為什麼這樣寫：</strong>真實醫院有多個科別同時在看診，Step 3 那條
+            「同一時間只能有一位病患看診中」的規則其實只在單一科別內成立——不同科別應該可以
+            同時各自有病患在看診。這一步要練習修改既有的業務規則（把範圍從「全院」縮小成
+            「同一科別」），同時新增一個依科別分組、顯示目前叫號狀況的看板，讓候診區的人
+            看得懂「現在輪到哪個科別的哪一位」。
+          </div>
+          <div class="prompt-box" id="prompt-12">請幫我把候診看板擴充成可以區分科別（像真的醫院一樣，掛號時要選科別）：
+
+1. 在 patients 的資料模型加一個 department 欄位，值限定在以下五個
+   科別之一：內科、外科、小兒科、骨科、皮膚科。
+2. 「臨時掛號」表單加一個科別下拉選單（必選，預設「內科」），送出
+   時一併存進新病患資料。
+3. 候診名單表格加一欄顯示科別。
+4. 修改叫號的業務規則：原本「同一時間只能有一位病患看診中」，改成
+   「同一個科別同一時間只能有一位病患看診中」——不同科別可以同時
+   各自有病患在看診，只有同一科別內才需要跳出確認視窗、把原本看診
+   中的病患標記為完成看診。
+5. 在統計卡片下方新增一個「各科別現況」區塊，列出五個科別，每個
+   科別顯示目前看診中的病患姓名（沒有病患看診中就顯示「暫無看診」）。
+
+不要更動搜尋、篩選、統計卡片既有的功能邏輯，只在這些地方新增科別相關的顯示與規則。</div>
+          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-12">複製 Prompt</button>
+          <div class="expected-box">
+            <strong>預期 Bob 回應：</strong>每筆病患資料加上 <code>department</code> 欄位、
+            掛號表單新增科別選單、表格新增科別欄，<code>callPatient()</code> 的判斷邏輯改成
+            依科別比對現有看診中病患，並新增一個依科別分組渲染的區塊（例如
+            <code>renderDepartmentStatus()</code>）。
+            測試方式：分別在「內科」跟「外科」各叫一位病患看診，兩者應該可以同時顯示
+            「看診中」、不會互相跳出確認視窗；但同一科別內再叫另一位病患，才會跳出確認視窗。
           </div>
         </section>
 
