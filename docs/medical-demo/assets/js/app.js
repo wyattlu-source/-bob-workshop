@@ -1,11 +1,14 @@
-// 候診看板 - 完成版
-// 對應 workshops/medical/03-prompts.md 的 Prompt 1~5。
+// 候診看板 - 完成版 + 分科別叫號看板
+// 對應 workshops/medical/03-prompts.md 的 Prompt 1~5，
+// 加上 medical-tutorial.html Step 12（分科別叫號看板）的延伸功能。
+
+const DEPARTMENTS = ["內科", "外科", "小兒科", "骨科", "皮膚科"];
 
 let patients = [
-  { id: 1, name: "王小明", phone: "0912-345-678", appointmentTime: "09:00", status: "waiting" },
-  { id: 2, name: "陳雅婷", phone: "0922-111-222", appointmentTime: "09:15", status: "waiting" },
-  { id: 3, name: "李大同", phone: "0933-444-555", appointmentTime: "08:45", status: "in-consultation" },
-  { id: 4, name: "張美玲", phone: "0955-666-777", appointmentTime: "08:30", status: "done" },
+  { id: 1, name: "王小明", phone: "0912-345-678", appointmentTime: "09:00", status: "waiting", department: "內科" },
+  { id: 2, name: "陳雅婷", phone: "0922-111-222", appointmentTime: "09:15", status: "waiting", department: "外科" },
+  { id: 3, name: "李大同", phone: "0933-444-555", appointmentTime: "08:45", status: "in-consultation", department: "內科" },
+  { id: 4, name: "張美玲", phone: "0955-666-777", appointmentTime: "08:30", status: "done", department: "小兒科" },
 ];
 
 let searchQuery = "";
@@ -39,7 +42,7 @@ function render() {
   const rows = getFilteredPatients();
 
   if (rows.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-body-secondary py-4">沒有符合條件的病患</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-body-secondary py-4">沒有符合條件的病患</td></tr>`;
   } else {
     tbody.innerHTML = rows
       .map((p) => {
@@ -47,6 +50,7 @@ function render() {
         return `
           <tr>
             <td>${p.name}</td>
+            <td>${p.department}</td>
             <td>${p.phone || "-"}</td>
             <td>${p.appointmentTime}</td>
             <td><span class="badge ${meta.badgeClass}">${meta.label}</span></td>
@@ -57,6 +61,7 @@ function render() {
   }
 
   renderStats();
+  renderDepartmentStatus();
 }
 
 function renderStats() {
@@ -66,6 +71,26 @@ function renderStats() {
     (p) => p.status === "in-consultation"
   ).length;
   document.getElementById("stat-done").textContent = patients.filter((p) => p.status === "done").length;
+}
+
+function renderDepartmentStatus() {
+  const container = document.getElementById("department-status");
+  if (!container) return;
+
+  container.innerHTML = DEPARTMENTS.map((dept) => {
+    const current = patients.find((p) => p.department === dept && p.status === "in-consultation");
+    const label = current ? current.name : "暫無看診";
+    const badgeClass = current ? "text-bg-info" : "text-bg-secondary";
+    return `
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="card text-center shadow-sm h-100">
+          <div class="card-body">
+            <div class="text-body-secondary small">${dept}</div>
+            <span class="badge ${badgeClass} mt-2">${label}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join("");
 }
 
 function setPatientStatus(id, newStatus) {
@@ -79,10 +104,12 @@ function callPatient(id) {
   const target = patients.find((p) => p.id === id);
   if (!target) return;
 
-  const current = patients.find((p) => p.status === "in-consultation");
+  const current = patients.find(
+    (p) => p.department === target.department && p.status === "in-consultation"
+  );
   if (current) {
     const confirmed = confirm(
-      `目前 ${current.name} 正在看診中，是否將其標記為完成看診，並改叫 ${target.name}？`
+      `${target.department} 目前 ${current.name} 正在看診中，是否將其標記為完成看診，並改叫 ${target.name}？`
     );
     if (!confirmed) return;
     setPatientStatus(current.id, "done");
@@ -152,6 +179,7 @@ function setupAddPatientForm() {
     const name = document.getElementById("patient-name").value.trim();
     const phone = document.getElementById("patient-phone").value.trim();
     const appointmentTime = document.getElementById("patient-time").value || currentTimeHHMM();
+    const department = document.getElementById("patient-department").value;
 
     if (!name) {
       errorBox.textContent = "姓名為必填欄位。";
@@ -164,6 +192,7 @@ function setupAddPatientForm() {
       name,
       phone,
       appointmentTime,
+      department,
       status: "waiting",
     });
 
