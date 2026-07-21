@@ -88,28 +88,26 @@
       background: var(--warn);
     }
 
-    .checklist {
-      list-style: none;
-      margin-left: 0;
-      padding-left: 0;
-    }
-
-    .checklist li {
+    .verify-checklist .form-check {
       padding-left: 2rem;
-      position: relative;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
     }
 
-    .checklist li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.15rem;
+    .verify-checklist .form-check-input {
       width: 1.2rem;
       height: 1.2rem;
+      margin-left: -2rem;
       border: 2px solid var(--accent);
-      border-radius: 4px;
-      background: var(--bg);
+    }
+
+    .verify-checklist .form-check-input:checked {
+      background-color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .verify-checklist .form-check-input:checked ~ .form-check-label {
+      color: var(--muted);
+      text-decoration: line-through;
     }
 
     .toc {
@@ -163,15 +161,15 @@
           <a href="#step2">Step 2 掛號表單</a>
           <a href="#step3">Step 3 叫號與完成看診</a>
           <a href="#step4">Step 4 搜尋／篩選／統計</a>
-          <a href="#step5">Step 5 重構收尾</a>
+          <a href="#step5">Step 5 分科別叫號看板</a>
+          <a href="#step6">Step 6 重構收尾</a>
           <a href="#verify">驗收</a>
-          <a href="#step6">延伸 1 資料持久化</a>
-          <a href="#step7">延伸 2 深色模式</a>
-          <a href="#step8">進階 AGENTS.md</a>
-          <a href="#step9">進階 Rules</a>
-          <a href="#step10">進階 Skills</a>
-          <a href="#step11">進階 Commands</a>
-          <a href="#step12">延伸 3 分科別叫號</a>
+          <a href="#step7">延伸 1 資料持久化</a>
+          <a href="#step8">延伸 2 深色模式</a>
+          <a href="#step9">進階 AGENTS.md</a>
+          <a href="#step10">進階 Rules</a>
+          <a href="#step11">進階 Skills</a>
+          <a href="#step12">進階 Commands</a>
           <a href="#reflection">課後反思</a>
         </div>
       </aside>
@@ -293,229 +291,7 @@ assets/js/app.js
 
         <!-- Step 5 ===================================================== -->
         <section id="step5" class="mb-5">
-          <h2 class="step-title"><span class="step-number">5</span> 重構收尾</h2>
-          <div class="why-box">
-            <strong>為什麼這樣寫：</strong>走完前四步後，<code>app.js</code> 可能已經有點亂。
-            這一步不加新功能，只請 Bob 檢視現有程式碼並提出重構建議，練習「檢查與修改 Bob 的產出」而不是照單全收。
-          </div>
-          <div class="prompt-box" id="prompt-5">請檢視目前的 assets/js/app.js，看看有沒有重複的內容、命名不一致，
-或是可以拆解成更小、更好維護的部分，列出你會怎麼調整，但先不要
-直接修改檔案，等我確認後再進行。</div>
-          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-5">複製 Prompt</button>
-          <div class="expected-box">
-            <strong>預期 Bob 回應：</strong>先列出具體的調整建議，等你看過覺得合理後，
-            再回覆「請照這個計畫修改」放行它實際動手。這一步練習的是「先看計畫、再放行修改」的習慣。
-          </div>
-        </section>
-
-        <!-- 驗收 ======================================================== -->
-        <section id="verify" class="mb-5">
-          <h2>驗收：對照功能檢查清單</h2>
-          <p class="text-body-secondary">走完 Step 1~5 後，你的畫面應該滿足以下所有項目：</p>
-          <div class="card p-4">
-            <ul class="checklist mb-0">
-              <li>開啟 <code>index.html</code>，能看到候診名單表格，依預約時間排序，每列顯示姓名、電話、預約時間、狀態徽章。</li>
-              <li>點擊「臨時掛號」可以開啟表單，姓名留空無法送出；成功送出後新病患會出現在名單中，狀態為候診中。</li>
-              <li>候診中的病患可以按「叫號」變成看診中；若已有其他病患看診中，會先跳出確認視窗。</li>
-              <li>看診中的病患可以按「完成看診」變成已完成，已完成的病患沒有操作按鈕。</li>
-              <li>搜尋框輸入姓名關鍵字，名單會即時過濾；狀態篩選按鈕可以只顯示特定狀態的病患。</li>
-              <li>畫面上有四張統計卡片（總人數／候診中／看診中／已完成），數字不受搜尋或篩選影響，永遠反映全部病患的實際狀態。</li>
-              <li>瀏覽器 Console 沒有錯誤訊息。</li>
-            </ul>
-          </div>
-          <div class="alert alert-secondary mt-3 mb-0">
-            卡關對不起來時，把瀏覽器 Console 的錯誤訊息直接貼給 Bob，或請講師協助確認畫面行為是否符合預期。
-          </div>
-        </section>
-
-        <!-- 延伸 1 ====================================================== -->
-        <section id="step6" class="mb-5">
-          <h2 class="step-title">
-            <span class="step-number">6</span> 延伸功能：資料持久化
-            <span class="extension-badge">延伸練習</span>
-          </h2>
-          <div class="why-box">
-            <strong>為什麼這樣寫：</strong>目前重新整理頁面資料就會恢復成初始範例，這對實際護理站來說不能接受。
-            要讓 Bob 把資料存在瀏覽器裡，同時要講清楚「清除瀏覽器資料才回到範例」這個邊界條件，
-            避免 Bob 把預設資料寫死覆蓋掉使用者資料。
-          </div>
-          <div class="prompt-box" id="prompt-6">目前重新整理頁面後，候診名單會回到最初的範例資料，這不符合實際
-使用情境。請幫我加上資料保存功能：
-
-1. 每次病患名單有變動（新增病患、狀態改變）時，把目前的名單存進
-   瀏覽器的本機儲存空間。
-2. 頁面載入時，先檢查本機有沒有存過的資料，如果有就用它取代原本
-   寫死的範例資料；如果沒有（例如第一次開啟，或使用者清除過瀏覽器
-   資料），才使用原本的範例資料。
-3. 不要改動既有的名單顯示、叫號、完成看診邏輯，只在資料變動時加上
-   存檔，並在頁面一開始加上讀檔。</div>
-          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-6">複製 Prompt</button>
-          <div class="expected-box">
-            <strong>預期 Bob 回應：</strong>新增存檔／讀檔的邏輯，在名單有變動的地方存檔，並在頁面載入時先嘗試讀檔。
-            測試方式：新增一位病患後重新整理頁面，該病患應該還在名單中；用瀏覽器開發者工具清除本機儲存資料後重新整理，應該回到最初的三筆範例資料。
-          </div>
-        </section>
-
-        <!-- 延伸 2 ====================================================== -->
-        <section id="step7" class="mb-5">
-          <h2 class="step-title">
-            <span class="step-number">7</span> 延伸功能：深色模式
-            <span class="extension-badge">延伸練習</span>
-          </h2>
-          <div class="why-box">
-            <strong>為什麼這樣寫：</strong>這個功能牽涉大量既有 CSS，如果只說「加深色模式」，
-            Bob 可能會整個重寫樣式。要求「用 CSS 變數 + class 切換」能限制修改範圍，
-            並具體點名徽章與統計卡片這種容易被忽略、對比度容易出問題的元件。
-          </div>
-          <div class="prompt-box" id="prompt-7">在頂部導覽列加一個「深色模式」切換按鈕，讓整個候診看板可以在淺色／
-深色配色之間切換：
-
-1. 切換樣式時盡量重用同一套設計，不要為深色模式另外寫一份完全重複
-   的樣式。
-2. 狀態徽章（候診中／看診中／已完成）與統計卡片在深色模式下要維持
-   清楚可讀，不能變成背景跟文字顏色太接近、看不清楚。
-3. 使用者選擇的模式要記住，重新整理頁面後仍要維持上次選擇的深色或
-   淺色模式。
-
-不要更動候診名單、搜尋篩選、統計卡片的既有功能邏輯，只處理外觀切換。</div>
-          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-7">複製 Prompt</button>
-          <div class="expected-box">
-            <strong>預期 Bob 回應：</strong>在樣式檔裡定義淺色／深色兩套配色，新增切換按鈕處理深色模式偏好設定的讀寫。
-            測試方式：切換深色模式後重新整理頁面，應該維持深色狀態；檢查徽章文字在深色背景下是否清楚可讀。
-          </div>
-        </section>
-
-        <!-- Step 8 ====================================================== -->
-        <section id="step8" class="mb-5">
-          <h2 class="step-title">
-            <span class="step-number">8</span> 進階練習：寫一份 AGENTS.md
-            <span class="extension-badge practice-badge">進階練習</span>
-          </h2>
-          <div class="why-box">
-            <strong>為什麼這樣寫：</strong>走完 Step 1~7，你其實已經跟 Bob 培養出一套默契
-            （一次只做一件事、業務規則要明講、不要動到已驗證過的邏輯……）。這一步不是新增看板功能，
-            而是練習把這些「為什麼」寫成一份 <code>AGENTS.md</code>，放在專案根目錄。
-            之後不管是換一台電腦、換一個人接手，還是隔一段時間再回來改這個專案，
-            Bob 都會自動載入這份原則，不用每次重新溝通一次。
-          </div>
-          <div class="prompt-box" id="prompt-8">請幫我在專案根目錄建立一份 AGENTS.md，把我們開發這個候診看板專案時
-累積下來的原則整理進去：
-
-1. 這是一個 demo／教學用途的專案，病患資料都是假資料，不要加入任何
-   真實個資，也不要串接真實後端 API。
-2. 修改功能時一次只處理一個需求，不要一次重寫整個 app.js。
-3. 涉及病患狀態轉換的業務規則（例如同一時間只能有一位病患在看診中）
-   要明確寫出來，不要讓 Bob 自己猜。
-4. 深色模式、資料持久化這類視覺／儲存邏輯的修改，不要影響候診名單、
-   搜尋篩選、統計卡片既有的功能邏輯。
-
-用條列式寫成簡短的核心原則就好，不要展開成落落長的說明文件。</div>
-          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-8">複製 Prompt</button>
-          <div class="expected-box">
-            <strong>預期 Bob 回應：</strong>在專案根目錄建立 <code>AGENTS.md</code>，條列出上述幾點原則，
-            內容簡短、每條一句話。測試方式：之後在同一個資料夾開新對話請 Bob 修改功能，
-            觀察它是否會主動遵守這幾條原則（例如是否還是一次只處理一個需求），而不用你重複交代。
-          </div>
-        </section>
-
-        <!-- Step 9 ====================================================== -->
-        <section id="step9" class="mb-5">
-          <h2 class="step-title">
-            <span class="step-number">9</span> 進階練習：用 Rules 固定程式碼風格
-            <span class="extension-badge practice-badge">進階練習</span>
-          </h2>
-          <div class="why-box">
-            <strong>為什麼這樣寫：</strong><code>AGENTS.md</code> 放的是「為什麼」，
-            像縮排、命名慣例這種持續影響風格、但跟專案原則本身無關的細節，
-            適合放進 Rules，而不是塞進 <code>AGENTS.md</code> 把它撐大。Rules 也可以之後再慢慢調整，
-            不用一次寫完美。
-          </div>
-          <div class="prompt-box" id="prompt-9">請幫我在 .bob/rules/ 底下建立一份 coding-style.md，把我們這個候診看板
-專案目前使用的程式碼風格整理成規則，之後每次對話都會自動套用：
-
-1. JavaScript 用 2 個空格縮排，字串一律用雙引號。
-2. 每個功能區塊的命名要清楚說明它在做什麼（例如「更新病患狀態」的
-   部分，命名就要看得出跟更新病患狀態有關）。
-3. 每個功能區塊只做一件事，如果內容太長（超過 30 行），建議拆成更
-   小的區塊。
-4. 需要更新畫面時，優先重用既有的顯示邏輯，不要在其他地方另外處理
-   畫面更新。
-
-寫成簡短的條列規則就好。</div>
-          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-9">複製 Prompt</button>
-          <div class="expected-box">
-            <strong>預期 Bob 回應：</strong>建立 <code>.bob/rules/coding-style.md</code>，列出上述規則。
-            測試方式：在同一個資料夾開新對話請 Bob 加功能，新產生的程式碼應該自動符合這些風格，
-            不需要每次都重複交代。
-          </div>
-        </section>
-
-        <!-- Step 10 ===================================================== -->
-        <section id="step10" class="mb-5">
-          <h2 class="step-title">
-            <span class="step-number">10</span> 進階練習：把「檢查業務規則」包裝成 Skill
-            <span class="extension-badge practice-badge">進階練習</span>
-          </h2>
-          <div class="why-box">
-            <strong>為什麼這樣寫：</strong>Step 3 提醒過「同一時間只能有一位病患看診中」這種
-            藏在需求背後的業務規則很容易被漏掉。「檢查程式碼有沒有遺漏的業務規則」是一個值得
-            重複使用的流程，不是一次性的 Prompt——包裝成 Skill 之後，之後任何專案都能重複觸發同一套檢查。
-          </div>
-          <div class="prompt-box" id="prompt-10">請幫我在 .bob/skills/business-rule-check/ 建立一個 SKILL.md，
-定義一個叫 business-rule-check 的技能：
-
----
-name: business-rule-check
-description: 檢查程式碼裡有沒有遺漏的業務規則或例外狀況
----
-
-執行檢查：
-1. 找出程式碼中所有跟「病患狀態改變」有關的地方。
-2. 針對每一種狀態改變，列出可能被忽略的例外狀況（例如：如果同時
-   有兩個人要改成同一個狀態會怎樣？如果資料是空的會怎樣？）。
-3. 條列輸出檢查結果，不要直接修改程式碼。</div>
-          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-10">複製 Prompt</button>
-          <div class="expected-box">
-            <strong>預期 Bob 回應：</strong>建立 <code>.bob/skills/business-rule-check/SKILL.md</code>。
-            測試方式：之後可以請 Bob「用 business-rule-check 這個 Skill 檢查一下 app.js」，
-            它會依照這個流程列出檢查結果，不用每次重新描述一次要怎麼檢查。
-          </div>
-        </section>
-
-        <!-- Step 11 ===================================================== -->
-        <section id="step11" class="mb-5">
-          <h2 class="step-title">
-            <span class="step-number">11</span> 進階練習：用 Command 加速常用操作
-            <span class="extension-badge practice-badge">進階練習</span>
-          </h2>
-          <div class="why-box">
-            <strong>為什麼這樣寫：</strong>「請 Bob 列出目前 app.js 完整內容，重新對齊狀態」
-            是卡關時常用的動作（見 Step 5 之前提到的操作技巧）。這種常常要打、每次描述都差不多的操作，
-            值得做成一個 Slash Command，一個指令就觸發，不用每次重新打字。
-          </div>
-          <div class="prompt-box" id="prompt-11">請幫我在 .bob/commands/ 底下建立一個叫 show-state.md 的 Command：
-
----
-description: 列出目前 app.js 的完整內容，方便重新對齊狀態
-argument-hint: （不需要參數）
----
-
-請列出目前 assets/js/app.js 的完整內容，並簡短說明目前分成哪些
-部分、各自負責什麼，讓我可以確認現在的程式碼狀態。</div>
-          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-11">複製 Prompt</button>
-          <div class="expected-box">
-            <strong>預期 Bob 回應：</strong>建立 <code>.bob/commands/show-state.md</code>。
-            測試方式：之後觸發這個指令（實際觸發方式依 Bob IDE 介面而定），
-            就能重複用同一個指令快速看目前檔案狀態，不用每次重新描述需求。
-          </div>
-        </section>
-
-        <!-- Step 12 ===================================================== -->
-        <section id="step12" class="mb-5">
-          <h2 class="step-title">
-            <span class="step-number">12</span> 延伸功能：分科別叫號看板
-            <span class="extension-badge">延伸練習</span>
-          </h2>
+          <h2 class="step-title"><span class="step-number">5</span> 分科別叫號看板</h2>
           <div class="why-box">
             <strong>為什麼這樣寫：</strong>真實醫院有多個科別同時在看診，Step 3 那條
             「同一時間只能有一位病患看診中」的規則其實只在單一科別內成立——不同科別應該可以
@@ -523,7 +299,7 @@ argument-hint: （不需要參數）
             「同一科別」），同時新增一個依科別分組、顯示目前叫號狀況的看板，讓候診區的人
             看得懂「現在輪到哪個科別的哪一位」。
           </div>
-          <div class="prompt-box" id="prompt-12">請幫我把候診看板擴充成可以區分科別（像真的醫院一樣，掛號時要選科別）：
+          <div class="prompt-box" id="prompt-5">請幫我把候診看板擴充成可以區分科別（像真的醫院一樣，掛號時要選科別）：
 
 1. 每一位病患資料加上「科別」這個項目，限定在以下五個科別之一：
    內科、外科、小兒科、骨科、皮膚科。
@@ -538,7 +314,7 @@ argument-hint: （不需要參數）
    科別顯示目前看診中的病患姓名（沒有病患看診中就顯示「暫無看診」）。
 
 不要更動搜尋、篩選、統計卡片既有的功能邏輯，只在這些地方新增科別相關的顯示與規則。</div>
-          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-12">複製 Prompt</button>
+          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-5">複製 Prompt</button>
           <div class="expected-box">
             <strong>預期 Bob 回應：</strong>每一位病患資料加上科別、掛號表單新增科別選單、
             表格新增科別欄，叫號的判斷邏輯改成依科別比對現有看診中病患，並新增一個依科別
@@ -547,6 +323,270 @@ argument-hint: （不需要參數）
             「看診中」、不會互相跳出確認視窗；但同一科別內再叫另一位病患，才會跳出確認視窗。
           </div>
         </section>
+
+        <!-- Step 6 ===================================================== -->
+        <section id="step6" class="mb-5">
+          <h2 class="step-title"><span class="step-number">6</span> 重構收尾</h2>
+          <div class="why-box">
+            <strong>為什麼這樣寫：</strong>走完前五步後，<code>app.js</code> 可能已經有點亂。
+            這一步不加新功能，只請 Bob 檢視現有程式碼並提出重構建議，練習「檢查與修改 Bob 的產出」而不是照單全收。
+          </div>
+          <div class="prompt-box" id="prompt-6">請檢視目前的 assets/js/app.js，看看有沒有重複的內容、命名不一致，
+或是可以拆解成更小、更好維護的部分，列出你會怎麼調整，但先不要
+直接修改檔案，等我確認後再進行。</div>
+          <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-6">複製 Prompt</button>
+          <div class="expected-box">
+            <strong>預期 Bob 回應：</strong>先列出具體的調整建議，等你看過覺得合理後，
+            再回覆「請照這個計畫修改」放行它實際動手。這一步練習的是「先看計畫、再放行修改」的習慣。
+          </div>
+        </section>
+
+        <!-- 驗收 ======================================================== -->
+        <section id="verify" class="mb-5">
+          <h2>驗收：對照功能檢查清單</h2>
+          <p class="text-body-secondary">走完 Step 1~6 後，勾選以下每一項，確認你的畫面都做到了：</p>
+          <div class="card p-4">
+            <div class="verify-checklist">
+              <div class="form-check">
+                <input class="form-check-input verify-checkbox" type="checkbox" id="verify-1" />
+                <label class="form-check-label" for="verify-1">
+                  開啟 index.html，能看到候診名單表格，依預約時間排序，每列顯示姓名、電話、科別、預約時間、狀態徽章。
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input verify-checkbox" type="checkbox" id="verify-2" />
+                <label class="form-check-label" for="verify-2">
+                  點擊「臨時掛號」可以開啟表單，姓名留空無法送出；成功送出後新病患會出現在名單中，狀態為候診中，並記錄選擇的科別。
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input verify-checkbox" type="checkbox" id="verify-3" />
+                <label class="form-check-label" for="verify-3">
+                  候診中的病患可以按「叫號」變成看診中；同一科別已有其他病患看診中時會先跳出確認視窗，不同科別可以同時各自有病患看診中。
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input verify-checkbox" type="checkbox" id="verify-4" />
+                <label class="form-check-label" for="verify-4">
+                  看診中的病患可以按「完成看診」變成已完成，已完成的病患沒有操作按鈕。
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input verify-checkbox" type="checkbox" id="verify-5" />
+                <label class="form-check-label" for="verify-5">
+                  搜尋框輸入姓名關鍵字，名單會即時過濾；狀態篩選按鈕可以只顯示特定狀態的病患。
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input verify-checkbox" type="checkbox" id="verify-6" />
+                <label class="form-check-label" for="verify-6">
+                  畫面上有四張統計卡片（總人數／候診中／看診中／已完成），數字不受搜尋或篩選影響，永遠反映全部病患的實際狀態。
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input verify-checkbox" type="checkbox" id="verify-7" />
+                <label class="form-check-label" for="verify-7">
+                  統計卡片下方有「各科別現況」區塊，列出五個科別，分別顯示目前看診中的病患姓名或「暫無看診」。
+                </label>
+              </div>
+              <div class="form-check mb-0">
+                <input class="form-check-input verify-checkbox" type="checkbox" id="verify-8" />
+                <label class="form-check-label" for="verify-8">瀏覽器 Console 沒有錯誤訊息。</label>
+              </div>
+            </div>
+          </div>
+          <div class="alert alert-secondary mt-3 mb-0">
+            卡關對不起來時，把瀏覽器 Console 的錯誤訊息直接貼給 Bob，或請講師協助確認畫面行為是否符合預期。
+          </div>
+        </section>
+
+        <div id="extension-lock-notice" class="alert alert-warning text-center mb-5">
+          🔒 完成上面驗收清單的所有項目後，才會顯示下面的延伸內容。
+        </div>
+
+        <div id="extension-content" class="d-none">
+          <!-- 延伸 1 ====================================================== -->
+          <section id="step7" class="mb-5">
+            <h2 class="step-title">
+              <span class="step-number">7</span> 延伸功能：資料持久化
+              <span class="extension-badge">延伸練習</span>
+            </h2>
+            <div class="why-box">
+              <strong>為什麼這樣寫：</strong>目前重新整理頁面資料就會恢復成初始範例，這對實際護理站來說不能接受。
+              要讓 Bob 把資料存在瀏覽器裡，同時要講清楚「清除瀏覽器資料才回到範例」這個邊界條件，
+              避免 Bob 把預設資料寫死覆蓋掉使用者資料。
+            </div>
+            <div class="prompt-box" id="prompt-7">目前重新整理頁面後，候診名單會回到最初的範例資料，這不符合實際
+使用情境。請幫我加上資料保存功能：
+
+1. 每次病患名單有變動（新增病患、狀態改變）時，把目前的名單存進
+   瀏覽器的本機儲存空間。
+2. 頁面載入時，先檢查本機有沒有存過的資料，如果有就用它取代原本
+   寫死的範例資料；如果沒有（例如第一次開啟，或使用者清除過瀏覽器
+   資料），才使用原本的範例資料。
+3. 不要改動既有的名單顯示、叫號、完成看診邏輯，只在資料變動時加上
+   存檔，並在頁面一開始加上讀檔。</div>
+            <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-7">複製 Prompt</button>
+            <div class="expected-box">
+              <strong>預期 Bob 回應：</strong>新增存檔／讀檔的邏輯，在名單有變動的地方存檔，並在頁面載入時先嘗試讀檔。
+              測試方式：新增一位病患後重新整理頁面，該病患應該還在名單中；用瀏覽器開發者工具清除本機儲存資料後重新整理，應該回到最初的三筆範例資料。
+            </div>
+          </section>
+
+          <!-- 延伸 2 ====================================================== -->
+          <section id="step8" class="mb-5">
+            <h2 class="step-title">
+              <span class="step-number">8</span> 延伸功能：深色模式
+              <span class="extension-badge">延伸練習</span>
+            </h2>
+            <div class="why-box">
+              <strong>為什麼這樣寫：</strong>這個功能牽涉大量既有 CSS，如果只說「加深色模式」，
+              Bob 可能會整個重寫樣式。要求「用 CSS 變數 + class 切換」能限制修改範圍，
+              並具體點名徽章與統計卡片這種容易被忽略、對比度容易出問題的元件。
+            </div>
+            <div class="prompt-box" id="prompt-8">在頂部導覽列加一個「深色模式」切換按鈕，讓整個候診看板可以在淺色／
+深色配色之間切換：
+
+1. 切換樣式時盡量重用同一套設計，不要為深色模式另外寫一份完全重複
+   的樣式。
+2. 狀態徽章（候診中／看診中／已完成）與統計卡片在深色模式下要維持
+   清楚可讀，不能變成背景跟文字顏色太接近、看不清楚。
+3. 使用者選擇的模式要記住，重新整理頁面後仍要維持上次選擇的深色或
+   淺色模式。
+
+不要更動候診名單、搜尋篩選、統計卡片的既有功能邏輯，只處理外觀切換。</div>
+            <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-8">複製 Prompt</button>
+            <div class="expected-box">
+              <strong>預期 Bob 回應：</strong>在樣式檔裡定義淺色／深色兩套配色，新增切換按鈕處理深色模式偏好設定的讀寫。
+              測試方式：切換深色模式後重新整理頁面，應該維持深色狀態；檢查徽章文字在深色背景下是否清楚可讀。
+            </div>
+          </section>
+
+          <!-- Step 9 ====================================================== -->
+          <section id="step9" class="mb-5">
+            <h2 class="step-title">
+              <span class="step-number">9</span> 進階練習：寫一份 AGENTS.md
+              <span class="extension-badge practice-badge">進階練習</span>
+            </h2>
+            <div class="why-box">
+              <strong>為什麼這樣寫：</strong>走完 Step 1~8，你其實已經跟 Bob 培養出一套默契
+              （一次只做一件事、業務規則要明講、不要動到已驗證過的邏輯……）。這一步不是新增看板功能，
+              而是練習把這些「為什麼」寫成一份 <code>AGENTS.md</code>，放在專案根目錄。
+              之後不管是換一台電腦、換一個人接手，還是隔一段時間再回來改這個專案，
+              Bob 都會自動載入這份原則，不用每次重新溝通一次。
+            </div>
+            <div class="prompt-box" id="prompt-9">請幫我在專案根目錄建立一份 AGENTS.md，把我們開發這個候診看板專案時
+累積下來的原則整理進去：
+
+1. 這是一個 demo／教學用途的專案，病患資料都是假資料，不要加入任何
+   真實個資，也不要串接真實後端 API。
+2. 修改功能時一次只處理一個需求，不要一次重寫整個 app.js。
+3. 涉及病患狀態轉換的業務規則（例如同一時間只能有一位病患在看診中）
+   要明確寫出來，不要讓 Bob 自己猜。
+4. 深色模式、資料持久化這類視覺／儲存邏輯的修改，不要影響候診名單、
+   搜尋篩選、統計卡片既有的功能邏輯。
+
+用條列式寫成簡短的核心原則就好，不要展開成落落長的說明文件。</div>
+            <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-9">複製 Prompt</button>
+            <div class="expected-box">
+              <strong>預期 Bob 回應：</strong>在專案根目錄建立 <code>AGENTS.md</code>，條列出上述幾點原則，
+              內容簡短、每條一句話。測試方式：之後在同一個資料夾開新對話請 Bob 修改功能，
+              觀察它是否會主動遵守這幾條原則（例如是否還是一次只處理一個需求），而不用你重複交代。
+            </div>
+          </section>
+
+          <!-- Step 10 ===================================================== -->
+          <section id="step10" class="mb-5">
+            <h2 class="step-title">
+              <span class="step-number">10</span> 進階練習：用 Rules 固定程式碼風格
+              <span class="extension-badge practice-badge">進階練習</span>
+            </h2>
+            <div class="why-box">
+              <strong>為什麼這樣寫：</strong><code>AGENTS.md</code> 放的是「為什麼」，
+              像縮排、命名慣例這種持續影響風格、但跟專案原則本身無關的細節，
+              適合放進 Rules，而不是塞進 <code>AGENTS.md</code> 把它撐大。Rules 也可以之後再慢慢調整，
+              不用一次寫完美。
+            </div>
+            <div class="prompt-box" id="prompt-10">請幫我在 .bob/rules/ 底下建立一份 coding-style.md，把我們這個候診看板
+專案目前使用的程式碼風格整理成規則，之後每次對話都會自動套用：
+
+1. JavaScript 用 2 個空格縮排，字串一律用雙引號。
+2. 每個功能區塊的命名要清楚說明它在做什麼（例如「更新病患狀態」的
+   部分，命名就要看得出跟更新病患狀態有關）。
+3. 每個功能區塊只做一件事，如果內容太長（超過 30 行），建議拆成更
+   小的區塊。
+4. 需要更新畫面時，優先重用既有的顯示邏輯，不要在其他地方另外處理
+   畫面更新。
+
+寫成簡短的條列規則就好。</div>
+            <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-10">複製 Prompt</button>
+            <div class="expected-box">
+              <strong>預期 Bob 回應：</strong>建立 <code>.bob/rules/coding-style.md</code>，列出上述規則。
+              測試方式：在同一個資料夾開新對話請 Bob 加功能，新產生的程式碼應該自動符合這些風格，
+              不需要每次都重複交代。
+            </div>
+          </section>
+
+          <!-- Step 11 ===================================================== -->
+          <section id="step11" class="mb-5">
+            <h2 class="step-title">
+              <span class="step-number">11</span> 進階練習：把「檢查業務規則」包裝成 Skill
+              <span class="extension-badge practice-badge">進階練習</span>
+            </h2>
+            <div class="why-box">
+              <strong>為什麼這樣寫：</strong>Step 3 提醒過「同一時間只能有一位病患看診中」這種
+              藏在需求背後的業務規則很容易被漏掉。「檢查程式碼有沒有遺漏的業務規則」是一個值得
+              重複使用的流程，不是一次性的 Prompt——包裝成 Skill 之後，之後任何專案都能重複觸發同一套檢查。
+            </div>
+            <div class="prompt-box" id="prompt-11">請幫我在 .bob/skills/business-rule-check/ 建立一個 SKILL.md，
+定義一個叫 business-rule-check 的技能：
+
+---
+name: business-rule-check
+description: 檢查程式碼裡有沒有遺漏的業務規則或例外狀況
+---
+
+執行檢查：
+1. 找出程式碼中所有跟「病患狀態改變」有關的地方。
+2. 針對每一種狀態改變，列出可能被忽略的例外狀況（例如：如果同時
+   有兩個人要改成同一個狀態會怎樣？如果資料是空的會怎樣？）。
+3. 條列輸出檢查結果，不要直接修改程式碼。</div>
+            <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-11">複製 Prompt</button>
+            <div class="expected-box">
+              <strong>預期 Bob 回應：</strong>建立 <code>.bob/skills/business-rule-check/SKILL.md</code>。
+              測試方式：之後可以請 Bob「用 business-rule-check 這個 Skill 檢查一下 app.js」，
+              它會依照這個流程列出檢查結果，不用每次重新描述一次要怎麼檢查。
+            </div>
+          </section>
+
+          <!-- Step 12 ===================================================== -->
+          <section id="step12" class="mb-5">
+            <h2 class="step-title">
+              <span class="step-number">12</span> 進階練習：用 Command 加速常用操作
+              <span class="extension-badge practice-badge">進階練習</span>
+            </h2>
+            <div class="why-box">
+              <strong>為什麼這樣寫：</strong>「請 Bob 列出目前 app.js 完整內容，重新對齊狀態」
+              是卡關時常用的動作。這種常常要打、每次描述都差不多的操作，
+              值得做成一個 Slash Command，一個指令就觸發，不用每次重新打字。
+            </div>
+            <div class="prompt-box" id="prompt-12">請幫我在 .bob/commands/ 底下建立一個叫 show-state.md 的 Command：
+
+---
+description: 列出目前 app.js 的完整內容，方便重新對齊狀態
+argument-hint: （不需要參數）
+---
+
+請列出目前 assets/js/app.js 的完整內容，並簡短說明目前分成哪些
+部分、各自負責什麼，讓我可以確認現在的程式碼狀態。</div>
+            <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-12">複製 Prompt</button>
+            <div class="expected-box">
+              <strong>預期 Bob 回應：</strong>建立 <code>.bob/commands/show-state.md</code>。
+              測試方式：之後觸發這個指令（實際觸發方式依 Bob IDE 介面而定），
+              就能重複用同一個指令快速看目前檔案狀態，不用每次重新描述需求。
+            </div>
+          </section>
+        </div>
 
         <section id="reflection" class="mb-5">
           <h2>課後反思</h2>
@@ -597,6 +637,19 @@ argument-hint: （不需要參數）
         }
       });
     });
+
+    const verifyCheckboxes = document.querySelectorAll(".verify-checkbox");
+    const lockNotice = document.getElementById("extension-lock-notice");
+    const extensionContent = document.getElementById("extension-content");
+
+    function updateExtensionLock() {
+      const allChecked = Array.from(verifyCheckboxes).every((cb) => cb.checked);
+      lockNotice.classList.toggle("d-none", allChecked);
+      extensionContent.classList.toggle("d-none", !allChecked);
+    }
+
+    verifyCheckboxes.forEach((cb) => cb.addEventListener("change", updateExtensionLock));
+    updateExtensionLock();
   </script>
 </body>
 </html>
