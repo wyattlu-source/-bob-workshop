@@ -169,7 +169,6 @@
           <a href="#step9">進階 AGENTS.md</a>
           <a href="#step10">進階 Rules</a>
           <a href="#step11">進階 Skills</a>
-          <a href="#step12">進階 Commands</a>
           <a href="#reflection">課後反思</a>
         </div>
       </aside>
@@ -198,7 +197,9 @@
             不要一開始就要求「做出完整系統」，才能先確認 Bob 對病患資料的理解跟你一致，之後每一步都在這個基礎上疊加。
           </div>
           <div class="prompt-box" id="prompt-1">請幫我建立一個全新的靜態網頁專案，只用 HTML + Bootstrap 5（線上引入）
-+ 一般的 JavaScript，不使用任何框架、不需要額外安裝工具。專案結構：
++ 一般的 JavaScript，不使用任何框架、不需要額外安裝工具。Bootstrap 用
+純 CDN 連結引入即可，不要加 integrity 或 crossorigin 這類完整性驗證
+屬性。專案結構：
 
 index.html
 assets/css/style.css
@@ -556,34 +557,6 @@ description: 檢查程式碼裡有沒有遺漏的業務規則或例外狀況
               <strong>預期 Bob 回應：</strong>建立 <code>.bob/skills/business-rule-check/SKILL.md</code>。
               測試方式：之後可以請 Bob「用 business-rule-check 這個 Skill 檢查一下 app.js」，
               它會依照這個流程列出檢查結果，不用每次重新描述一次要怎麼檢查。
-            </div>
-          </section>
-
-          <!-- Step 12 ===================================================== -->
-          <section id="step12" class="mb-5">
-            <h2 class="step-title">
-              <span class="step-number">12</span> 進階練習：用 Command 加速常用操作
-              <span class="extension-badge practice-badge">進階練習</span>
-            </h2>
-            <div class="why-box">
-              <strong>為什麼這樣寫：</strong>「請 Bob 列出目前 app.js 完整內容，重新對齊狀態」
-              是卡關時常用的動作。這種常常要打、每次描述都差不多的操作，
-              值得做成一個 Slash Command，一個指令就觸發，不用每次重新打字。
-            </div>
-            <div class="prompt-box" id="prompt-12">請幫我在 .bob/commands/ 底下建立一個叫 show-state.md 的 Command：
-
----
-description: 列出目前 app.js 的完整內容，方便重新對齊狀態
-argument-hint: （不需要參數）
----
-
-請列出目前 assets/js/app.js 的完整內容，並簡短說明目前分成哪些
-部分、各自負責什麼，讓我可以確認現在的程式碼狀態。</div>
-            <button class="btn btn-sm btn-outline-secondary copy-btn-inline mb-3" data-copy-target="prompt-12">複製 Prompt</button>
-            <div class="expected-box">
-              <strong>預期 Bob 回應：</strong>建立 <code>.bob/commands/show-state.md</code>。
-              測試方式：之後觸發這個指令（實際觸發方式依 Bob IDE 介面而定），
-              就能重複用同一個指令快速看目前檔案狀態，不用每次重新描述需求。
             </div>
           </section>
         </div>
